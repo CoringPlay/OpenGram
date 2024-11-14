@@ -10,7 +10,7 @@
     <button id="login-button">Войти через Discord</button>
     <script>
         const CLIENT_ID = '1306516186577764412';
-        const REDIRECT_URI = 'https://coringplay.github.io/callback';
+        const REDIRECT_URI = 'https://coringplay.github.io/OpenGram/callback.html';
         const OAUTH2_URL = `https://discord.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&response_type=code&scope=identify`;
         document.getElementById('login-button').addEventListener('click', () => {
             window.location.href = OAUTH2_URL;
