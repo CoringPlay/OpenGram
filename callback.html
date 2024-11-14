@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обработка авторизации</title>
+</head>
+<body>
+    <h1>Загрузка...</h1>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+
+        if (code) {
+            fetch('https://opengram-api.vercel.app/api/auth?code=' + code)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Ошибка авторизации:', data.error);
+                        alert('Ошибка авторизации: ' + data.error);
+                    } else {
+                        localStorage.setItem('discordToken', JSON.stringify(data));
+                        alert('Успешная авторизация!');
+                        window.location.href = '/';
+                    }
+                })
+                .catch(error => {
+                    console.error('Ошибка сети:', error);
+                    alert('Произошла ошибка сети.');
+                });
+        } else {
+            alert('Код авторизации отсутствует.');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
