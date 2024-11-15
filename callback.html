@@ -15,17 +15,22 @@
             fetch(`https://opengram-api.vercel.app/api/auth?code=${code}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (data && data.user_id) {
-                      window.location.href = `/profile/${data.user_id}`;
+                    if (data.error) {
+                        console.error('Ошибка авторизации:', data.error);
+                        alert('Ошибка авторизации: ' + data.error);
                     } else {
-                      console.error('Ошибка при получении данных пользователя:', data);
+                        localStorage.setItem('discordToken', JSON.stringify(data));
+                        alert('Успешная авторизация!');
+                        window.location.href = '/profile/{user_id}';
                     }
                 })
                 .catch(error => {
-                    console.error('Произошла ошибка:', error);
+                    console.error('Ошибка сети:', error);
+                    alert('Произошла ошибка сети.');
                 });
         } else {
-        console.error('Код авторизации отсутствует');
+            alert('Код авторизации отсутствует.');
+            window.location.href = '/';
         }
     </script>
 </body>
