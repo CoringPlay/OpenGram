@@ -12,25 +12,20 @@
         const code = urlParams.get('code');
 
         if (code) {
-            fetch('https://opengram-api.vercel.app/api/auth?code=' + code)
+            fetch(`https://opengram-api.vercel.app/api/auth?code=${code}`)
                 .then(response => response.json())
                 .then(data => {
-                    if (data.error) {
-                        console.error('Ошибка авторизации:', data.error);
-                        alert('Ошибка авторизации: ' + data.error);
+                    if (data && data.user_id) {
+                      window.location.href = `/profile/${data.user_id}`;
                     } else {
-                        localStorage.setItem('discordToken', JSON.stringify(data));
-                        alert('Успешная авторизация!');
-                        window.location.href = '/';
+                      console.error('Ошибка при получении данных пользователя:', data);
                     }
                 })
                 .catch(error => {
-                    console.error('Ошибка сети:', error);
-                    alert('Произошла ошибка сети.');
+                    console.error('Произошла ошибка:', error);
                 });
         } else {
-            alert('Код авторизации отсутствует.');
-            window.location.href = '/';
+        console.error('Код авторизации отсутствует');
         }
     </script>
 </body>
